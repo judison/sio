@@ -4,6 +4,7 @@
 	<target name="default">
 		<delete file="org.judison.sio_1.0.0.jar" failonerror="false" />
 		<jar destfile="org.judison.sio_1.0.0.jar" basedir="bin" manifest="META-INF/MANIFEST.MF">
+			<fileset file="LICENSE" />
 		</jar>
 	</target>
 	
