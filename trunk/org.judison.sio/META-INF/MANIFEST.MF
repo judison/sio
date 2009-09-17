@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Simple IO
+Bundle-SymbolicName: org.judison.sio
+Bundle-Version: 1.0.0
+Bundle-Vendor: Judison O. Gil Filho
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.judison.sio,
+ org.judison.sio.annot
