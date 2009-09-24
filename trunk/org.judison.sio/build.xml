@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="org.judison.sio" default="default" >
+<project name="org.judison.sio" default="jars" >
 
-	<target name="default">
+	<target name="jars" depends="javadoc">
 		<delete file="org.judison.sio_1.0.0.jar" failonerror="false" />
+		<delete file="org.judison.sio_1.0.0_src.zip" failonerror="false" />
+		
 		<jar destfile="org.judison.sio_1.0.0.jar" basedir="bin" manifest="META-INF/MANIFEST.MF">
 			<fileset file="LICENSE" />
 		</jar>
+		
+		<zip destfile="org.judison.sio_1.0.0_doc.zip" basedir="doc" />
+	</target>
+	
+	<target name="javadoc">
+		<javadoc access="public" additionalparam="-J-Dfile.encoding=UTF-8 -charset &quot;UTF-8&quot;" author="true" classpath="." destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.judison.sio,org.judison.sio.annot" source="1.6" sourcepath="src" splitindex="true" use="true" version="true"/>
 	</target>
 	
 </project>
