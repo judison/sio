@@ -32,16 +32,23 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 
 import org.judison.sio.annot.WriteAttr;
 
 public class SWriter implements Closeable {
+
+	private static final Charset utf8 = Charset.forName("UTF-8");
 
 	private OutputStream stream;
 	private byte[] buf = new byte[8];
 
 	public SWriter(OutputStream stream) {
 		this.stream = stream;
+	}
+
+	protected OutputStream getStream() {
+		return stream;
 	}
 
 	public void writeByte(byte data) throws IOException {
@@ -100,6 +107,7 @@ public class SWriter implements Closeable {
 		stream.write(buf, 0, 2);
 	}
 
+	/*
 	public void writeString(String data) throws IOException {
 		if (data == null) {
 			writeInt(-1);
@@ -111,6 +119,10 @@ public class SWriter implements Closeable {
 			buf[1] = (byte)((ch >> 0) & 0xff);
 			stream.write(buf, 0, 2);
 		}
+	}
+	*/
+	public void writeString(String data) throws IOException {
+		writeByteArray(data.getBytes(utf8));
 	}
 
 	public void writeEnum(Enum<?> data) throws IOException {
