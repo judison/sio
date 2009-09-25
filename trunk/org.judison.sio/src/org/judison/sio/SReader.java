@@ -33,10 +33,13 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 
 import org.judison.sio.annot.ReadAttr;
 
 public class SReader implements Closeable {
+
+	private static final Charset utf8 = Charset.forName("UTF-8");
 
 	private InputStream stream;
 	private byte[] buf = new byte[8];
@@ -68,8 +71,8 @@ public class SReader implements Closeable {
 			throw new EOFException();
 		return (//
 		/*    */(0xff & buf[0]) << 24 | //
-				(0xff & buf[1]) << 16 | //
-				(0xff & buf[2]) << 8 | //
+			(0xff & buf[1]) << 16 | //
+			(0xff & buf[2]) << 8 | //
 		/*    */(0xff & buf[3]) << 0);
 	}
 
@@ -78,12 +81,12 @@ public class SReader implements Closeable {
 			throw new EOFException();
 		return (//
 		/*    */(long)(0xff & buf[0]) << 56 | //
-				(long)(0xff & buf[1]) << 48 | //
-				(long)(0xff & buf[2]) << 40 | //
-				(long)(0xff & buf[3]) << 32 | //
-				(long)(0xff & buf[4]) << 24 | //
-				(long)(0xff & buf[5]) << 16 | //
-				(long)(0xff & buf[6]) << 8 | //
+			(long)(0xff & buf[1]) << 48 | //
+			(long)(0xff & buf[2]) << 40 | //
+			(long)(0xff & buf[3]) << 32 | //
+			(long)(0xff & buf[4]) << 24 | //
+			(long)(0xff & buf[5]) << 16 | //
+			(long)(0xff & buf[6]) << 8 | //
 		/*    */(long)(0xff & buf[7]) << 0);
 	}
 
@@ -107,6 +110,7 @@ public class SReader implements Closeable {
 		(0xff & buf[1]) << 0);
 	}
 
+	/*
 	public String readString() throws IOException {
 		int len = readInt();
 		if (len == -1)
@@ -120,6 +124,10 @@ public class SReader implements Closeable {
 			str[i] = (char)((0xff & buf[0]) << 8 | (0xff & buf[1]) << 0);
 		}
 		return new String(str);
+	}
+	*/
+	public String readString() throws IOException {
+		return new String(readByteArray(), utf8);
 	}
 
 	public <T extends Enum<T>> T readEnum(Class<T> enumClass) throws IOException {
