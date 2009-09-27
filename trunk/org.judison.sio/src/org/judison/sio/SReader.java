@@ -127,7 +127,11 @@ public class SReader implements Closeable {
 	}
 	*/
 	public String readString() throws IOException {
-		return new String(readByteArray(), utf8);
+		byte[] data = readByteArray();
+		if (data == null)
+			return null;
+		else
+			return new String(data, utf8);
 	}
 
 	public <T extends Enum<T>> T readEnum(Class<T> enumClass) throws IOException {

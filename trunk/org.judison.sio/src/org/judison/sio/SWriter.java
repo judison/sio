@@ -122,7 +122,10 @@ public class SWriter implements Closeable {
 	}
 	*/
 	public void writeString(String data) throws IOException {
-		writeByteArray(data.getBytes(utf8));
+		if (data == null)
+			writeByteArray(null);
+		else
+			writeByteArray(data.getBytes(utf8));
 	}
 
 	public void writeEnum(Enum<?> data) throws IOException {
