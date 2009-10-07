@@ -41,6 +41,7 @@ public class SWriter implements Closeable {
 	private static final Charset utf8 = Charset.forName("UTF-8");
 
 	private OutputStream stream;
+
 	private byte[] buf = new byte[8];
 
 	public SWriter(OutputStream stream) {
