@@ -52,14 +52,42 @@ public class SReader implements Closeable {
 		this.stream = new ByteArrayInputStream(data);
 	}
 
+	private int read(byte[] b, int off, int len) throws IOException {
+		if (b == null) {
+			throw new NullPointerException();
+		} else if (off < 0 || len < 0 || len > b.length - off) {
+			throw new IndexOutOfBoundsException();
+		} else if (len == 0) {
+			return 0;
+		}
+
+		int c = stream.read();
+		if (c == -1) {
+			return -1;
+		}
+		b[off] = (byte)c;
+
+		int i = 1;
+		try {
+			for (; i < len; i++) {
+				c = stream.read();
+				if (c == -1) {
+					break;
+				}
+				b[off + i] = (byte)c;
+			}
+		} catch (IOException ee) {}
+		return i;
+	}
+
 	public byte readByte() throws IOException {
-		if (stream.read(buf, 0, 1) != 1)
+		if (read(buf, 0, 1) != 1)
 			throw new EOFException();
 		return buf[0];
 	}
 
 	public short readShort() throws IOException {
-		if (stream.read(buf, 0, 2) != 2)
+		if (read(buf, 0, 2) != 2)
 			throw new EOFException();
 		return (short)(//
 		(0xff & buf[0]) << 8 | //
@@ -67,7 +95,7 @@ public class SReader implements Closeable {
 	}
 
 	public int readInt() throws IOException {
-		if (stream.read(buf, 0, 4) != 4)
+		if (read(buf, 0, 4) != 4)
 			throw new EOFException();
 		return (//
 		/*    */(0xff & buf[0]) << 24 | //
@@ -77,7 +105,7 @@ public class SReader implements Closeable {
 	}
 
 	public long readLong() throws IOException {
-		if (stream.read(buf, 0, 8) != 8)
+		if (read(buf, 0, 8) != 8)
 			throw new EOFException();
 		return (//
 		/*    */(long)(0xff & buf[0]) << 56 | //
@@ -103,7 +131,7 @@ public class SReader implements Closeable {
 	}
 
 	public char readChar() throws IOException {
-		if (stream.read(buf, 0, 2) != 2)
+		if (read(buf, 0, 2) != 2)
 			throw new EOFException();
 		return (char)(//
 		(0xff & buf[0]) << 8 | //
@@ -119,7 +147,7 @@ public class SReader implements Closeable {
 			return "";
 		char[] str = new char[len];
 		for (int i = 0; i < len; i++) {
-			if (stream.read(buf, 0, 2) != 2)
+			if (read(buf, 0, 2) != 2)
 				throw new EOFException();
 			str[i] = (char)((0xff & buf[0]) << 8 | (0xff & buf[1]) << 0);
 		}
@@ -145,7 +173,7 @@ public class SReader implements Closeable {
 		if (size == 0)
 			return new byte[0];
 		byte[] data = new byte[size];
-		stream.read(data, 0, size);
+		read(data, 0, size);
 		return data;
 	}
 
