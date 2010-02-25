@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<tileset xmlns="http://isometric.judison.org/ns/tileset" desc="Arabic Houses">
+	<!-- Dark Age -->
+	<tile file="02223000.png" ax="84" ay="73"/>
+	<tile file="02223001.png" ax="89" ay="78"/>
+	<tile file="02223002.png" ax="89" ay="71"/>
+	<!-- Feudal Age -->
+	<tile file="02234000.png" ax="100" ay="105"/>
+	<tile file="02234001.png" ax="92" ay="100"/>
+	<tile file="02234002.png" ax="91" ay="100"/>
+	<!-- Castle Age-->
+	<tile file="02246000.png" ax="101" ay="107"/>
+	<tile file="02246001.png" ax="96" ay="100"/>
+	<tile file="02246002.png" ax="92" ay="99"/>
+</tileset>
